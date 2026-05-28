@@ -20,7 +20,6 @@ library(janitor) # cleaning data frames
 library(here) # file/folder organization
 library(readxl) # reading .xlsx files
 library(ggeffects)
-
 # storing kelp data as object "kelp"
 kelp <- read.csv(here("data", "temp-kelp.csv"))
 # creating new object that fits a linear model to the data
@@ -221,5 +220,26 @@ ggplot() +
 ## 2b. 
 Figure 3. Less sleep is associated with lower workout satisfaction. Data collected from workouts taken place in the time period 4-20-2026 to 5-27-2026 (Data accessed 05-28-2026).
 Purple points represent individual observations of amount fo sleep (hours) (total n = 30) plotted against workout satisfaction score (1-5). Teal, thin line represent the linear regression model prediction for workout satisfaction given amount of sleep. Thick, transparent, teal stripe represents 95% confidence interval of linear regression model. 
+
+# Problem 3
+
+## 3a. 
+An affective visualization for my personal data could be done in a variety of ways. My idea is to use circles to represent each workout. The size of the circle is based on sleep, the color is based on satisfaction, the type of workout would be some pattern or symbol on the circle, and a handful of other features for the other variables. This would work for my data because it has the ability to have lots of different features, and my data collection has many different variables. 
+
+## 3b. 
+
+## 3c. 
+
+## 3d. 
+
+## 3e. 
+
+# Problem 4
+
+## 4a. 
+The test for this paper is Mann- Whitney U. This test addresses the main question of "if the lead contamination in neighborhoods in Huntington Park are higher than other places in LA?" by showing a potential significant difference using a p-value (p<0.01). If there was a significant difference seen, that means that the lead contamination in Huntington Park would be higher than the surrounding areas. This test works for this because they're independent and not normally distributed. 
+![Figure](screenshot.png)
+
+
 
 
