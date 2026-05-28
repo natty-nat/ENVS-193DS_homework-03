@@ -1,0 +1,32 @@
+---
+title: "Homework 3"
+author: "Natalie Parker"
+date: "05-28-26"
+format: pdf:
+  toc: true
+  execute:
+    message: false
+    warning: false
+---
+
+# Set up
+
+```{r}
+#| label: libraries-and-data
+
+library(tidyverse) # general use
+library(janitor) # cleaning data frames
+library(here) # file/folder organization
+library(readxl) # reading .xlsx files
+
+# storing kelp data as object "kelp"
+kelp <- read.csv(here("data", "temp-kelp.csv"))
+# storing personal data as object "personal_data"
+personal_data <- read_xlsx(here("data", "ENVS 193DS- Personal Data.xlsx"))
+```
+
+# Problem 1
+
+## 1a.
+
+The appropriate tests would be the Pearson's correlation and linear regression to determine the strength of the relationship between giant kelp frond elongation rate and temperature. Pearson's correlation measures the strength and the direction between the two variables. Linear regression aims to describe a linear relationship between the variables while being able to describe strength as well. 
