@@ -30,3 +30,42 @@ personal_data <- read_xlsx(here("data", "ENVS 193DS- Personal Data.xlsx"))
 ## 1a.
 
 The appropriate tests would be the Pearson's correlation and linear regression to determine the strength of the relationship between giant kelp frond elongation rate and temperature. Pearson's correlation measures the strength and the direction between the two variables. Linear regression aims to describe a linear relationship between the variables while being able to describe strength as well. 
+
+## 1b. 
+```{r}
+#| label: visualization-of-temp-and-kelp
+#| warning: false
+# base layer: ggplot with kelp data
+ggplot(data = kelp, 
+       aes (x = temp_c, # x-axis is sea temp
+            y = kelp_elong)) + # y-axis is kelp elongation rate
+  # first layer: geom_point to show underlying data
+  geom_point(color = "#1f78b4", # changing the color and size
+             size = 3, 
+             alpha = 0.8) + 
+  # second layer: geom_smooth to show confidence interval and linear regression line using "lm"
+  geom_smooth(method = "lm", 
+              # changing the color of the ribbon, line, and changing the type of line
+              color = "#e31a1c", 
+              fill = "#fb9a99", 
+              se = TRUE, 
+              linetype = "dashed") +
+  # adding labels of the x- and y-axes, adding an appropriate title
+  labs ( x= "Average Ocean Temperature (°C)",
+         y = bquote(Frond~Elongation~Rate~(cm~day^-1)),
+                    title = "Giant Kelp Elongation Rate vs. Ocean Temperature") +
+  # changing the theme
+  theme_minimal() +
+  # customizing the look of the titles!
+  theme(plot.title = element_text(face = "bold",
+                                  size = 14, 
+                                  hjust = 0.5),
+        axis.title = element_text(face = "plain",
+                                  size = 11)
+  )
+
+
+
+
+```
+
