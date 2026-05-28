@@ -3,7 +3,7 @@ title: "Homework 3"
 author: "Natalie Parker"
 date: "05-28-26"
 format:
-  gfm:
+  pdf:
     toc: true # use this to display a table of contents
 execute:
   message: false # use this to make sure messages don't show up
@@ -230,9 +230,10 @@ Purple points represent individual observations of amount fo sleep (hours) (tota
 An affective visualization for my personal data could be done in a variety of ways. My idea is to use circles to represent each workout. The size of the circle is based on sleep, the color is based on satisfaction, the type of workout would be some pattern or symbol on the circle, and a handful of other features for the other variables. This would work for my data because it has the ability to have lots of different features, and my data collection has many different variables. 
 
 ## 3b. 
-![Figure](IMG_6964.png)
+![Sketch](IMG_6964.png)
 
 ## 3c. 
+![Draft](Img_6965.png)
 
 ## 3d. 
 
