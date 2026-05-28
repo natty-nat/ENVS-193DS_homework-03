@@ -3,7 +3,7 @@ title: "Homework 3"
 author: "Natalie Parker"
 date: "05-28-26"
 format:
-  pdf:
+  gfm:
     toc: true # use this to display a table of contents
 execute:
   message: false # use this to make sure messages don't show up
