@@ -100,8 +100,17 @@ I think I did ok checking the assumptions. It's hard because making the decision
 
 ### Running test
 ```{r}
+#| label: showing-results
 # showing the output of linear regression
 summary(kelp_model)
 ```
+
+## 1d. 
+To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate, I used an F test from a linear regression model. I used the linear regression model because the data met the assumptions for the model and the goal was to test the strength of the relationship of the variables. A linear model is great for testing strength and relationship. I used the f-test because it's traditional to get the output for an F-test when creating a linear model. 
+
+The elongation rate of giant kelp decreased as the average ocean temperature increased (linear regression, F(30,1) = 26.93, R^2^ = 0.473, p< 0.001, $\alpha$ = 0.05)
+
+Based on Model predictions, for each unit 1 increase in ocean temperature, we expect an decrease of 0.43 $\pm$ 0.08 (SE) cm day^-1^.
+
 
 
