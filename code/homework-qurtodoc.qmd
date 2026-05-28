@@ -164,8 +164,13 @@ ggplot(data = personal_clean,
   labs(
     x = "Length of Workout (hours)",
     y = "Satisfaction Score (1-5)",
-    title = "Length of Workout Doesn't Influence Satisfaction")
+    title = "Workout Length in Relation to Satisfaction",
+    subtitle = "05/27/26")
 ```
+
+## 2b.
+Figure 2. Length of workout doesn't influence satisfaction. Data collected from workouts taken place in the time period 4-20-2026 to 5-27-2026 (Data accessed 05-28-2026). 
+Teal points represent individual observations of length of workout (hours) (total n = 30) plotted against satisfaction with workout (1-5). 
 
 ```{r}
 #| label: new-satisfaction-vs.-sleep
@@ -197,20 +202,24 @@ ggplot() +
                 y = predicted),
             color = "#00bdd0",
             linewidth = 1) +
- 
-  # Clean labels with explicit units
+  # adding axes titles and titles!
   labs(
     x = "Amount of Sleep (Hours)",
     y = "Workout Satisfaction Score (1-5)",
-    title = "Workout Satisfaction Predicted by Sleep Duration") +
-  # Apply clean base theme and strip all grid lines
+    title = "Workout Satisfaction Predicted by Sleep Duration",
+    subtitle = "05/27/26") +
+  # changing theme
   theme_classic() +
+  # removing grid lines, bolding title, and changing axes text
   theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     plot.title = element_text(face = "bold", size = 13, hjust = 0.5),
     axis.title = element_text(face = "plain", size = 11))
-
-
 ```
+
+## 2b. 
+Figure 3. Less sleep is associated with lower workout satisfaction. Data collected from workouts taken place in the time period 4-20-2026 to 5-27-2026 (Data accessed 05-28-2026).
+Purple points represent individual observations of amount fo sleep (hours) (total n = 30) plotted against workout satisfaction score (1-5). Teal, thin line represent the linear regression model prediction for workout satisfaction given amount of sleep. Thick, transparent, teal stripe represents 95% confidence interval of linear regression model. 
+
 
