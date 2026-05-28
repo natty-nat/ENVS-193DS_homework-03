@@ -39,7 +39,8 @@ personal_clean <- read_csv(
   mutate(
     sleep_hours = 
       hour(hms(amount_of_sleep)) + (minute(hms(amount_of_sleep)) / 60),
-    # converting the columns of "date", "caffeine", and "satisfaction" to numbers and dates
+    # converting the columns of "date", "caffeine", and "satisfaction" 
+    # to numbers and dates
     date = as.Date(date, format = "%m/%d/%Y"),
     caffeine = as.numeric(caffeine),
     satisfaction = as.numeric(satisfaction))
@@ -83,7 +84,8 @@ ggplot(data = kelp,
             linewidth = 1)+
    labs ( x= "Average Ocean Temperature (°C)",
          y = bquote(Frond~Elongation~Rate~(cm~day^-1)),
-                    title = "Giant Kelp Elongation Rate vs. Ocean Temperature") +
+                    title = "Giant Kelp Elongation Rate vs. 
+         Ocean Temperature") +
   # changing the theme
   theme_minimal() +
   # customizing the look of the titles!
@@ -133,7 +135,8 @@ This test used the data collected from kelp in varying ocean temperatures to und
 ## 1f. 
 ```{r}
 #| label: pearsons-correlation
-# creating new object for pearson's test from kelp data and running pearson's test
+# creating new object for pearson's test from kelp data and running
+# pearson's test
 kelp_corr <- cor.test(kelp$temp_c, 
                       kelp$kelp_elong, 
                       method = "pearson")
@@ -227,7 +230,7 @@ Purple points represent individual observations of amount fo sleep (hours) (tota
 An affective visualization for my personal data could be done in a variety of ways. My idea is to use circles to represent each workout. The size of the circle is based on sleep, the color is based on satisfaction, the type of workout would be some pattern or symbol on the circle, and a handful of other features for the other variables. This would work for my data because it has the ability to have lots of different features, and my data collection has many different variables. 
 
 ## 3b. 
-![Figure](IMG_6963.png)
+![Figure](IMG_6964.png)
 
 ## 3c. 
 
@@ -242,6 +245,7 @@ I will be doing a mixed media piece with watercolors, colored pencils, and pens 
 I created this piece by brainstorming how to show many variables that was in my artistic realm and used inspiration from Lorraine Woodruff-Long. From their I decided to sketch on my paper the region for each circle, make a color palette, and a potential key.  
 
 ## 3e. 
+[Slides](https://docs.google.com/presentation/d/1wo8I9dZb1FMhUEOiI9nXgyw4GRF4ckBQ7vlfXtCfVe0/edit?slide=id.g3e55384c291_0_0#slide=id.g3e55384c291_0_0)
 
 # Problem 4
 
