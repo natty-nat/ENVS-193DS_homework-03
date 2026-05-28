@@ -2,11 +2,12 @@
 title: "Homework 3"
 author: "Natalie Parker"
 date: "05-28-26"
-format: pdf:
-  toc: true
-  execute:
-    message: false
-    warning: false
+format:
+  pdf:
+    toc: true # use this to display a table of contents
+execute:
+  message: false # use this to make sure messages don't show up
+  warning: false # use this to make sure warnings don't show up
 ---
 
 # Set up
@@ -18,9 +19,14 @@ library(tidyverse) # general use
 library(janitor) # cleaning data frames
 library(here) # file/folder organization
 library(readxl) # reading .xlsx files
+library(ggeffects)
 
 # storing kelp data as object "kelp"
 kelp <- read.csv(here("data", "temp-kelp.csv"))
+# creating new object that fits a linear model to the data
+kelp_model <- lm(
+  kelp_elong ~ temp_c, 
+  data = kelp)
 # storing personal data as object "personal_data"
 personal_data <- read_xlsx(here("data", "ENVS 193DS- Personal Data.xlsx"))
 ```
@@ -35,23 +41,33 @@ The appropriate tests would be the Pearson's correlation and linear regression t
 ```{r}
 #| label: visualization-of-temp-and-kelp
 #| warning: false
+# creating new object called kelp_preds
+kelp_preds <- ggpredict(
+  kelp_model, 
+  terms = "temp_c")
 # base layer: ggplot with kelp data
 ggplot(data = kelp, 
        aes (x = temp_c, # x-axis is sea temp
             y = kelp_elong)) + # y-axis is kelp elongation rate
   # first layer: geom_point to show underlying data
-  geom_point(color = "#1f78b4", # changing the color and size
-             size = 3, 
-             alpha = 0.8) + 
-  # second layer: geom_smooth to show confidence interval and linear regression line using "lm"
-  geom_smooth(method = "lm", 
-              # changing the color of the ribbon, line, and changing the type of line
-              color = "#e31a1c", 
-              fill = "#fb9a99", 
-              se = TRUE, 
-              linetype = "dashed") +
-  # adding labels of the x- and y-axes, adding an appropriate title
-  labs ( x= "Average Ocean Temperature (°C)",
+  geom_point(fill = "#1f78b4", # changing the color and size
+             size = 4, 
+             stroke = 1,
+             shape = 21) + 
+ # second layer: ribbon representing confidence interval
+ # using predictions data frame
+ geom_ribbon(data = kelp_preds,
+             aes(x = x,
+                 y = predicted, 
+                 ymin = conf.low,
+                 ymax = conf.high),
+             alpha = 0.1) +
+  # third layer: line representing model predictions
+  geom_line(data = kelp_preds,
+            aes(x = x,
+                y = predicted),
+            linewidth = 1)+
+   labs ( x= "Average Ocean Temperature (°C)",
          y = bquote(Frond~Elongation~Rate~(cm~day^-1)),
                     title = "Giant Kelp Elongation Rate vs. Ocean Temperature") +
   # changing the theme
@@ -61,11 +77,31 @@ ggplot(data = kelp,
                                   size = 14, 
                                   hjust = 0.5),
         axis.title = element_text(face = "plain",
-                                  size = 11)
-  )
+                                  size = 11))
+```
 
 
+## 1c. 
 
+### Checking assumptions
+```{r}
+#| label: diagnostic-plots-to-check-assumptions
+# base R residuals
+par(mfrow = c(2,2))
+plot(kelp_model)
 
 ```
+When thinking about the relationship between ocean temperature and kelp elongation, it would make sense for there to be a linear relationship. We can see this in the residuals vs. fitted plot and the plotted data. 
+We can assume independent errors due to the independent observations and data collection methods. 
+The residual vs. fitted and scale location plots both show us the homoscedasticity of errors. The plots show that the data is homoscedastic because of the decently straight trend line. 
+Looking at the QQ plot seen in residual plots, the data seems to be normally distributed. It roughly follows the straight line with variations that are normal to see in real data. 
+
+I think I did ok checking the assumptions. It's hard because making the decision is subjective, but generally most math isn't, and making the "wrong" choice can have big impacts. The QQ plot was hardest to assess due to the slight curve seen in it.  
+
+### Running test
+```{r}
+# showing the output of linear regression
+summary(kelp_model)
+```
+
 
