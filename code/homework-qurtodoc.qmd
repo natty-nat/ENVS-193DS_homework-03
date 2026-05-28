@@ -240,6 +240,9 @@ An affective visualization for my personal data could be done in a variety of wa
 The test for this paper is Mann- Whitney U. This test addresses the main question of "if the lead contamination in neighborhoods in Huntington Park are higher than other places in LA?" by showing a potential significant difference using a p-value (p<0.01). If there was a significant difference seen, that means that the lead contamination in Huntington Park would be higher than the surrounding areas. This test works for this because they're independent and not normally distributed. 
 ![Figure](screenshot.png)
 
+## 4b. 
+The author could have been more clear with their visual statistics. The x- and y- axes were chosen appropriately, but they don't show any underlying data, means or SE. I think it was wise to fill in the area under the lines, considering this plot is looking at the concentration density, but it lacks any other data visualization component. I don't feel like it's misleading or under representative per-say, but it could have been a little more descriptive. 
 
+## 4c. 
 
 
