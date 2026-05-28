@@ -27,8 +27,23 @@ kelp <- read.csv(here("data", "temp-kelp.csv"))
 kelp_model <- lm(
   kelp_elong ~ temp_c, 
   data = kelp)
-# storing personal data as object "personal_data"
-personal_data <- read_xlsx(here("data", "ENVS 193DS- Personal Data.xlsx"))
+# storing and cleaning personal data as object "personal_clean"
+personal_clean <- read_csv(
+  here("data", "ENVS 193DS- Personal Data - Sheet1.csv"), 
+  # skipping the first 2 messed up rows
+  skip = 2) |> 
+  # dropping the first empty column
+  select(-1) |> 
+  # cleaning the names
+  clean_names() |> 
+ # converting sleep to a graphable value
+  mutate(
+    sleep_hours = 
+      hour(hms(amount_of_sleep)) + (minute(hms(amount_of_sleep)) / 60),
+    # converting the columns of "date", "caffeine", and "satisfaction" to numbers and dates
+    date = as.Date(date, format = "%m/%d/%Y"),
+    caffeine = as.numeric(caffeine),
+    satisfaction = as.numeric(satisfaction))
 ```
 
 # Problem 1
@@ -108,9 +123,94 @@ summary(kelp_model)
 ## 1d. 
 To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate, I used an F test from a linear regression model. I used the linear regression model because the data met the assumptions for the model and the goal was to test the strength of the relationship of the variables. A linear model is great for testing strength and relationship. I used the f-test because it's traditional to get the output for an F-test when creating a linear model. 
 
-The elongation rate of giant kelp decreased as the average ocean temperature increased (linear regression, F(30,1) = 26.93, R^2^ = 0.473, p< 0.001, $\alpha$ = 0.05)
+We reject the null hypothesis, so the elongation rate of giant kelp decreased as the average ocean temperature increased (linear regression, F(30,1) = 26.93, R^2^ = 0.473, p< 0.001, $\alpha$ = 0.05)
 
 Based on Model predictions, for each unit 1 increase in ocean temperature, we expect an decrease of 0.43 $\pm$ 0.08 (SE) cm day^-1^.
 
+## 1e. 
 
+This test used the data collected from kelp in varying ocean temperatures to understand how increasing ocean temperature can affect giant kelp growth. From performing a F test for significance and a linear regression model for strength of the relationship, we were able to understand that when average ocean temp increases, we see a decrease in giant kelp elongation. This means that for giant kelp to be at their healthiest, ocean temperatures cannot continue to increase. 
+
+## 1f. 
+```{r}
+#| label: pearsons-correlation
+# creating new object for pearson's test from kelp data and running pearson's test
+kelp_corr <- cor.test(kelp$temp_c, 
+                      kelp$kelp_elong, 
+                      method = "pearson")
+# displaying test output
+kelp_corr
+```
+
+Both tests would have lead to the exact same decision of rejecting the null hypothesis because they have identical t-values of -5.189, p-values of 1.366e-05, and the same significance level of 0.05. They also come to the same conclusion for correlation and strength because of they have to same regression coefficient (-0.688), which is equal to the R squared value of 0.473 when squared. They both show a strong negative correlation between increase in temp and kelp elongation. 
+
+# Problem 2
+
+## 2a. 
+```{r}
+#| label: original-length-vs.-satisfaction
+# base layer: ggplot
+ggplot(data = personal_clean,
+       # x-axis is length of wo, y-axis is satisfaction
+       aes(x = length_of_wo,
+           y = satisfaction)) +
+  # first layer: point, points with a custom color
+  geom_point(color = "cyan4", size = 4, alpha = 0.8) +
+  # clean theme
+  theme_bw() +
+  # removing the excess grid marks
+  theme(panel.grid.minor = element_blank())+
+  # labels and title
+  labs(
+    x = "Length of Workout (hours)",
+    y = "Satisfaction Score (1-5)",
+    title = "Length of Workout Doesn't Influence Satisfaction")
+```
+
+```{r}
+#| label: new-satisfaction-vs.-sleep
+workout_model <- lm(satisfaction ~ sleep_hours, data = personal_clean)
+personal_preds <- ggpredict(workout_model, 
+                            terms = "sleep_hours")
+#base layer: ggplot 
+ggplot() +
+  # second layer: geom_point to show underlying data with personal_clean data
+  geom_point( data = personal_clean, 
+       aes(x = sleep_hours, 
+       y = satisfaction), 
+       fill = "#ac88ff",
+       size = 4,
+       stroke = 1,
+       shape = 21) +
+  # third layer: geom_ribbon to show CI
+ # using predictions data frame
+ geom_ribbon(data = personal_preds,
+             aes(x = x,
+                 y = predicted, 
+                 ymin = conf.low,
+                 ymax = conf.high),
+             fill = "#00bdd0",
+             alpha = 0.1) +
+  # third layer: line representing model predictions
+  geom_line(data = personal_preds,
+            aes(x = x,
+                y = predicted),
+            color = "#00bdd0",
+            linewidth = 1) +
+ 
+  # Clean labels with explicit units
+  labs(
+    x = "Amount of Sleep (Hours)",
+    y = "Workout Satisfaction Score (1-5)",
+    title = "Workout Satisfaction Predicted by Sleep Duration") +
+  # Apply clean base theme and strip all grid lines
+  theme_classic() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold", size = 13, hjust = 0.5),
+    axis.title = element_text(face = "plain", size = 11))
+
+
+```
 
